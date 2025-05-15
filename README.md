@@ -1,4 +1,4 @@
-# Enterprise Ticketing System
+# Enterprise Support Ticketing System
 
 A modern, feature-rich ticketing system for enterprise support teams.
 
@@ -10,36 +10,39 @@ A modern, feature-rich ticketing system for enterprise support teams.
 - **Real-time Messaging**: Built-in messaging system for ticket discussions
 - **Advanced Filtering**: Filter tickets by status, priority, assignee, tags
 - **Pagination**: Handle large volumes of tickets efficiently
-- **Responsive UI**: Works on desktop and mobile devices
+## Docker Setup
 
-## Technologies
+### Build the Docker Image
+```bash
+docker build -t enterprise-ticketing .
+```
 
-- Frontend: React, TypeScript, Tailwind CSS
-- State Management: Redux
-- Routing: React Router
-- Icons: Lucide React
-- Date Handling: date-fns
+### Run the Container
+```bash
+docker run -d -p 3000:3000 \
+  -e API_URL=http://your-api-url \
+  -e WS_URL=ws://your-websocket-url \
+  --name ticketing-app \
+  enterprise-ticketing
+```
 
-## Installation
+### Environment Variables
+- `API_URL`: URL for the backend API
+- `WS_URL`: URL for WebSocket connections
 
-1. Clone the repository
-2. Install dependencies:
-   ```
-   npm install
-   ```
-3. Start the development server:
-   ```
-   npm run dev
-   ```
+### Development Mode
+```bash
+docker run -d -p 3000:3000 \
+  -e NODE_ENV=development \
+  -v $(pwd):/app \
+  -v /app/node_modules \
+  --name ticketing-dev \
+  enterprise-ticketing
+```
 
-## Usage
-
-1. Navigate to `/tickets` to view all tickets
-2. Use filters to find specific tickets
-3. Click "New Ticket" to create a new support request
-4. Click any ticket to view details and add messages
-
-
-## License
-
-MIT
+### Production Build
+```bash
+docker run -d -p 80:80 \
+  --name ticketing-prod \
+  enterprise-ticketing
+```
